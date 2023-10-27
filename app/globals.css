@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button {
+  @apply border text-center border-slate-300 text-slate-300 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none w-16;
+}
+
+.button.primary {
+  @apply bg-teal-800 hover:bg-teal-600 focus-within:bg-teal-600 disabled:bg-teal-950;
+}
