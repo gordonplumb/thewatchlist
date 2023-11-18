@@ -1,5 +1,5 @@
 export type SearchItemType = {
-  id: number,
+  id: string,
   title: string,
   releaseDate: string,
   overview: string

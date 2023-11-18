@@ -1,0 +1,31 @@
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagList .tag {
+  padding-right: 0.5rem;
+}
+
+.addContainer {
+  display: flex;
+}
+
+.addInput {
+  height: 1.75rem;
+  border-width: 1px;
+  border-radius: 1rem;
+  background-color: transparent;
+  padding: 0 0.5rem;;
+}
+
+.addButton {
+  width: 1.8rem;
+  height: 1.8rem;
+  fill: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.addButton:hover {
+  fill: rgba(255, 255, 255, 0.4);
+}

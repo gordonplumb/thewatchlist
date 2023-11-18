@@ -1,0 +1,25 @@
+.tag {
+  border-width: 1px;
+  border-radius: 1rem;
+
+  width: fit-content;
+  padding: 0.1rem 0; 
+
+  display: flex;
+}
+
+.tagName {
+  padding: 0 0.25rem 0 0.5rem
+}
+
+.tagDelete {
+  width: 1.75rem;
+  height: 1.4rem;
+  padding-right: 0.25rem;
+  fill: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.tagDelete:hover {
+  fill: rgba(255, 255, 255, 0.4);
+}

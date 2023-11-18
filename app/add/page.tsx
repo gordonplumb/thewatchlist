@@ -1,32 +1,34 @@
 "use client"
 import Link from "next/link"
-import { useState } from "react"
+import React, { useState } from "react"
 import testSearchResults from "../data/searchResults.json"
 import { SearchItemType } from "../types/SearchItemType"
 import { SearchResultItem } from "../components/SearchResultItem"
-import { Tag } from "../components/Tag"
+import { TagList } from "../components/TagList"
+
+const testGenres = ["Genre1", "Genre2", "Genre3"]
 
 export default function Page() {
   const [searchInput, setSearchInput] = useState("")
   const [searchResults, setSearchResults] = useState<SearchItemType[]>([])
-  const [selectedItemId, setSelectedItemId] = useState("")
-  const [tags, setTags] = useState<string[]>([])
+  const [selectedItem, setSelectedItem] = useState<SearchItemType>()
   function search() {
     if (searchInput.length > 0) {
       setSearchResults(testSearchResults)
     }
   }
   function handleSearchResultClick(event: React.MouseEvent) {
-    setSelectedItemId(event.currentTarget.id)
-    // const genres
+    // TODO: make api call to get movie details
+    setSelectedItem(searchResults.find((item) => item.id === event.currentTarget.id))
   }
+
   return (
     <>
       <div className="flex-auto">
         <h2 className="text-xl mb-2">
           Add to list
         </h2>
-        {selectedItemId === "" ?
+        {!selectedItem ?
           <div className="flex-auto flex-col">
           <input
             type="text"
@@ -49,22 +51,21 @@ export default function Page() {
         </div> : 
         <div>
           <form>
-            <h3 className="text-lg">Inception</h3>
+            <h3 className="text-lg">{selectedItem.title}</h3>
             <div>
               <h4>Tags</h4>
-              {tags.map(tag => (
-                <Tag key={tag} name={tag} canDelete/>
-              ))}
+              <TagList tags={testGenres} canEdit />
+
             </div>
           </form>
         </div>
       }
       </div>
       <div className="flex ml-auto">
-        {selectedItemId !== "" ? <>
+        {selectedItem ? <>
           <button
             className="button mr-2"
-            onClick={() => setSelectedItemId("")}
+            onClick={() => setSelectedItem(undefined)}
           >
             Back
           </button>
@@ -72,7 +73,7 @@ export default function Page() {
         <Link className="button mr-2" href="/list">
           Cancel
         </Link>
-        <button className="button primary" disabled={selectedItemId === ""}>
+        <button className="button primary" disabled={!selectedItem}>
           Add
         </button>
       </div>
