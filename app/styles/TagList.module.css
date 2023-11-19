@@ -1,10 +1,16 @@
+.tagListContainer {
+  width: 100%;
+  display: flex;
+}
+
 .tagList {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 
 .tagList .tag {
-  padding-right: 0.5rem;
+  padding: 0 0.25rem 0.25rem 0;
 }
 
 .addContainer {
@@ -12,7 +18,9 @@
 }
 
 .addInput {
-  height: 1.75rem;
+  font-size: 0.8rem;
+  width: 8rem;
+  height: 1.55rem;
   border-width: 1px;
   border-radius: 1rem;
   background-color: transparent;
@@ -20,12 +28,28 @@
 }
 
 .addButton {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.6rem;
+  height: 1.6rem;
   fill: rgba(255, 255, 255, 0.6);
   cursor: pointer;
 }
 
 .addButton:hover {
   fill: rgba(255, 255, 255, 0.4);
+}
+
+.editButton {
+  width: 1.4rem;
+  height: 1.4rem;
+  cursor: pointer;
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.saveButton {
+  width: 1.4rem;
+  height: 1.4rem;
+  cursor: pointer;
+  fill: white;
+  stroke-width: 1px;
 }
