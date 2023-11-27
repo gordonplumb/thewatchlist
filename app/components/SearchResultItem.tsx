@@ -1,6 +1,6 @@
-import { SearchItemType } from "../types/SearchItemType";
+import { MovieDetails } from "../types/MovieDetails";
 
-type Props = SearchItemType & {
+type Props = MovieDetails & {
   onClick: React.MouseEventHandler
 }
 

@@ -1,0 +1,11 @@
+.creditItemContainer {
+  display: flex;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  margin: 0.25rem;
+}
+
+.textContainer {
+  padding-right: 0.5rem;
+}

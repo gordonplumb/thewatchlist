@@ -1,0 +1,14 @@
+.addButton {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  border-width: 1px;
+  margin-top: 3px;
+  background-color: white;
+  fill: var(--primary-color);
+  cursor: pointer;
+}
+
+.addButton:hover {
+  fill: var(--hover-primary-color);
+}

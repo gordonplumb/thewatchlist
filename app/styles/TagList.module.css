@@ -1,6 +1,7 @@
 .tagListContainer {
   width: 100%;
   display: flex;
+  margin-left: 0.25rem;
 }
 
 .tagList {
@@ -24,18 +25,8 @@
   border-width: 1px;
   border-radius: 1rem;
   background-color: transparent;
-  padding: 0 0.5rem;;
-}
-
-.addButton {
-  width: 1.6rem;
-  height: 1.6rem;
-  fill: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-}
-
-.addButton:hover {
-  fill: rgba(255, 255, 255, 0.4);
+  padding: 0 0.5rem;
+  margin-right: 0.25rem;
 }
 
 .editButton {

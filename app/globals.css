@@ -2,10 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: rgb(17, 94, 89);
+  --hover-primary-color: rgb(15, 118, 110);
+  --disabled-primary-color: rgb(4, 47, 46);
+  --secondary-text-color: rgba(255, 255, 255, 0.6);
+}
+
 .button {
   @apply border text-center border-slate-300 text-slate-300 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none w-16;
 }
 
 .button.primary {
-  @apply bg-teal-800 hover:bg-teal-600 focus-within:bg-teal-600 disabled:bg-teal-950;
+  background-color: var(--primary-color);
+}
+
+.button.primary:hover,
+.button.primary:focus-within {
+  background-color: var(--hover-primary-color);
+}
+
+.button.primary:disabled {
+  background-color: var(--disabled-primary-color);
+}
+
+.secondaryText {
+  color: var(--secondary-text-color);
+  font-size: 0.8rem;
 }
