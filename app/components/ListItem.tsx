@@ -1,5 +1,5 @@
-"use client"
-import { TagList } from "./TagList"
+'use client'
+import { TagList } from './TagList'
 
 type ListItemProps = {
   id: string,
@@ -8,7 +8,7 @@ type ListItemProps = {
   runtime: number,
   watched: boolean
 }
-export function ListItem({id, title, tags, runtime, watched}: ListItemProps) {
+export function ListItem({ id, title, tags, runtime, watched }: ListItemProps) {
   return <li>
     <div className="flex gap-1">
       <label htmlFor={id} className="w-1/3">{title}</label>

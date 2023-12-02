@@ -1,4 +1,4 @@
-import { MovieDetails } from "../types/MovieDetails";
+import { MovieDetails } from '../types/MovieDetails';
 
 type Props = MovieDetails & {
   onClick: React.MouseEventHandler

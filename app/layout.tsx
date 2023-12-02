@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import {getServerSession} from "next-auth/next"
+import { getServerSession } from 'next-auth/next'
 import Link from 'next/link'
 import { authOptions } from './api/auth/[...nextauth]/route'
 import Provider from './context/client-provider'

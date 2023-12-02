@@ -1,28 +1,28 @@
-"use client"
-import Link from "next/link"
-import React, { useState } from "react"
-import testSearchResults from "../data/searchResults.json"
-import { MovieDetails } from "../types/MovieDetails"
-import { SearchResultItem } from "../components/SearchResultItem"
-import { TagList } from "../components/TagList"
-import { MovieCredits } from "../types/MovieCredits"
-import { CreditItem } from "../components/CreditItem"
+'use client'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import testSearchResults from '../data/searchResults.json'
+import { MovieDetails } from '../types/MovieDetails'
+import { SearchResultItem } from '../components/SearchResultItem'
+import { TagList } from '../components/TagList'
+import { MovieCredits } from '../types/MovieCredits'
+import { CreditItem } from '../components/CreditItem'
 
-const testGenres = ["Genre1", "Genre2", "Genre3"]
+const testGenres = ['Genre1', 'Genre2', 'Genre3']
 const testMovieCredits = {
   cast: [
-    {name: "Cast Member1", character: "Main Character"},
-    {name: "Another Actor", character: "The Antagonist"},
-    {name: "Someone Else", character: "Another Character"}
+    { name: 'Cast Member1', character: 'Main Character' },
+    { name: 'Another Actor', character: 'The Antagonist' },
+    { name: 'Someone Else', character: 'Another Character' }
   ],
   crew: [
-    {name: "Director Person", job: "Director"},
-    {name: "The Writer", job: "Writer"}
+    { name: 'Director Person', job: 'Director' },
+    { name: 'The Writer', job: 'Writer' }
   ]
 }
 
 export default function Page() {
-  const [searchInput, setSearchInput] = useState("")
+  const [searchInput, setSearchInput] = useState('')
   const [searchResults, setSearchResults] = useState<MovieDetails[]>([])
   const [selectedItem, setSelectedItem] = useState<MovieDetails>()
   const [movieCredits, setMovieCredits] = useState<MovieCredits>()
@@ -98,7 +98,7 @@ export default function Page() {
               setSearchInput((e.target as HTMLInputElement).value)
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 search()
               }
             }}
@@ -136,7 +136,7 @@ export default function Page() {
           >
             Back
           </button>
-        </> : ""}
+        </> : ''}
         <Link className="button mr-2" href="/list">
           Cancel
         </Link>

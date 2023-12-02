@@ -7,7 +7,7 @@ type CreditItemProps = {
   onAdd: (name: string) => void
 }
 
-export function CreditItem({name, detail, onAdd}: CreditItemProps) {
+export function CreditItem({ name, detail, onAdd }: CreditItemProps) {
   return <div className={styles.creditItemContainer}>
     <div className={styles.textContainer}>
       <p>{name}</p>

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/TagList.module.css'
-import { Tag } from "./Tag"
-import { AddIcon } from "./AddIcon"
+import { Tag } from './Tag'
+import { AddIcon } from './AddIcon'
 
 type TagListProps = {
   listItemId?: string,
@@ -10,20 +10,20 @@ type TagListProps = {
   onTagsChange?: (tags: string[]) => void
 }
 
-export function TagList({listItemId, tags, canEdit, onTagsChange}: TagListProps) {
+export function TagList({ listItemId, tags, canEdit, onTagsChange }: TagListProps) {
   const [isEditing, setIsEditing] = useState(canEdit && listItemId === undefined)
   const [displayedTags, setDisplayedTags] = useState<string[]>(tags)
-  const [newTagName, setNewTagName] = useState("")
+  const [newTagName, setNewTagName] = useState('')
   let newDisplayedTags = tags
   useEffect(() => {
     setDisplayedTags(newDisplayedTags)
   }, [newDisplayedTags])
 
   function addNewTag() {
-    if (newTagName !== "" && !displayedTags.includes(newTagName)) {
+    if (newTagName !== '' && !displayedTags.includes(newTagName)) {
       newDisplayedTags = [...displayedTags, newTagName]
       setDisplayedTags(newDisplayedTags)
-      setNewTagName("")
+      setNewTagName('')
       if (onTagsChange) {
         onTagsChange(newDisplayedTags)
       }
@@ -96,7 +96,7 @@ export function TagList({listItemId, tags, canEdit, onTagsChange}: TagListProps)
               setNewTagName((e.target as HTMLInputElement).value)
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 addNewTag()
                 e.preventDefault()
               }
@@ -105,9 +105,9 @@ export function TagList({listItemId, tags, canEdit, onTagsChange}: TagListProps)
           <div onClick={addNewTag}>
             <AddIcon />
           </div>
-        </div> : ""
+        </div> : ''
       }
     </div>
-    {canEdit && listItemId !== undefined ? renderEditActionButton() : ""}
+    {canEdit && listItemId !== undefined ? renderEditActionButton() : ''}
   </div>
 }
