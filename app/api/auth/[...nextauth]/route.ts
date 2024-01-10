@@ -15,7 +15,11 @@ export const authOptions: AuthOptions = {
         if (credentials) {
           const res = await authenticate(credentials.email, credentials.password)
           if (res) {
-            return { id: res.userId }
+            return {
+              id: res.userId,
+              name: res.name,
+              accessToken: res.token
+            }
           }
         }
 
@@ -23,7 +27,23 @@ export const authOptions: AuthOptions = {
       }
     })
   ],
-  session: { strategy: 'jwt' }
+  pages: {
+    signIn: '/login',
+    error: '/login'
+  },
+  session: { strategy: 'jwt' },
+  callbacks: {
+    async jwt({ token, user, account }) {
+      if (account) {
+        token.accessToken = account.access_token
+      }
+      return token
+    },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken
+      return session
+    }
+  }
 }
 
 const handler = NextAuth(authOptions)

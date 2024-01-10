@@ -2,6 +2,7 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "object-curly-spacing": ["warn", "always"],
-    "quotes": ["warn", "single"]
+    "quotes": ["warn", "single"],
+    "eol-last": ["warn", "always"]
   }
 }

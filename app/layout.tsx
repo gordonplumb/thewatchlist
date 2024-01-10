@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth/next'
 import Link from 'next/link'
 import { authOptions } from './api/auth/[...nextauth]/route'
 import Provider from './context/client-provider'
+import { SignInButton } from './components/SignInButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +22,18 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-slate-800 text-slate-100 container mx-auto p-4 h-screen flex flex-col`}>
-        <header className="flex justify-between items-center mb-4 flex-initial">
-          <h1 className="text-2xl">The Watchlist</h1>
-          <Link className="button" href="/list">
-            My List
-          </Link>
-        </header>
         <Provider session={session}>
+          <header className="flex justify-between items-center mb-4 flex-initial">
+            <h1 className="text-2xl">The Watchlist</h1>
+            <div className="flex">
+              {session?.user ? (
+                <Link className="button block mr-1" href="/list">
+                  My List
+                </Link>  
+              ) : ''}
+              <SignInButton />
+            </div>
+          </header>
           {children}
         </Provider>
       </body>
