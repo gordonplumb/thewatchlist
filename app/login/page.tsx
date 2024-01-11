@@ -10,7 +10,7 @@ export default function LoginPage() {
   const password = useRef('')
 
   const onSubmit = () => {
-    if (email.current && password.current) {
+    if (!isDisabled) {
       signIn('credentials', {
         email: email.current,
         password: password.current,
@@ -25,7 +25,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-auto flex-col w-80 m-auto max-w-full">
+    <div className="flex flex-col w-80 m-auto max-w-full">
       <label>Email</label>
       <input
         type="text"

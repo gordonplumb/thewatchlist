@@ -28,10 +28,12 @@ class ServiceClient {
       })
       if (response.ok) {
         result = {
+          ok: true,
           body: await response.json()
         }
       } else {
         result = {
+          ok: false,
           status: response.status
         }
       }

@@ -10,4 +10,6 @@ export async function authenticate(email: string, password: string) {
 
 export async function signUp(name: string, email: string, password: string) {
   const result = await client.sendPost('auth/register', { name, email, password })
+
+  return !!result?.ok
 }
