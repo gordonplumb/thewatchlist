@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ListItem } from '../components/ListItem'
+import { ListItem } from '../../components/ListItem'
 
 const testData = [
   { id: '1', title: 'The Batman', tags: ['Thriller', 'Superhero'], runtime: 177, watched: true },
@@ -29,4 +29,3 @@ export default function Page() {
     </div>
   )
 }
-  

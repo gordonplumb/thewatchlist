@@ -1,24 +1,28 @@
-import config from '../conf'
-
-class ServiceClient {
+export class HttpClient {
   private endpoint: string
-  private static client: ServiceClient
+  private getToken: Function
 
-  private constructor(endpoint: string) {
+  protected constructor(endpoint: string, getToken: Function) {
     this.endpoint = endpoint
+    this.getToken = getToken
   }
 
-  public static Instance() {
-    return this.client || (this.client = new this(`${config.serviceEndpoint}/api`))
-  }
-
-  public sendGet(path: string) {
+  public async sendGet(path: string) {
+    const headers = new Headers()
+    const token = await this.getToken()
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`)
+    }
     return fetch(`${this.endpoint}/${path}`)
   }
 
   public async sendPost(path: string, body: object) {
     const headers = new Headers()
     headers.append('Content-Type', 'application/json')
+    const token = await this.getToken()
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`)
+    }
     let result
     try {
       const response = await fetch(`${this.endpoint}/${path}`, {
@@ -38,10 +42,9 @@ class ServiceClient {
         }
       }
     } catch (error) {
+      console.log(error)
       // todo
     }
     return result
   }
 }
-
-export default ServiceClient

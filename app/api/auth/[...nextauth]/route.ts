@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth/next'
 import type { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { authenticate } from '../../../services/authService'
+import { WatchlistService } from '../../../services/watchlistService'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -13,7 +13,8 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         if (credentials) {
-          const res = await authenticate(credentials.email, credentials.password)
+          const service = WatchlistService.GetServerInstance()
+          const res = await service.authenticate(credentials.email, credentials.password)
           if (res) {
             return {
               id: res.userId,

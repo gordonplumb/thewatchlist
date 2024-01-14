@@ -1,9 +1,10 @@
 'use client'
 import { useRef, useState } from 'react'
-import { signUp } from '../services/authService'
+import { WatchlistService } from '../services/watchlistService'
 import { signIn } from 'next-auth/react'
 
 export default function RegisterPage() {
+  const service = WatchlistService.GetBrowserInstance()
   const [isDisabled, setIsDisabled] = useState(false)
   const name = useRef('')
   const email = useRef('')
@@ -17,7 +18,7 @@ export default function RegisterPage() {
 
   const onSubmit = async () => {
     if (!isDisabled) {
-      const success = await signUp(name.current, email.current, password.current)
+      const success = await service.signUp(name.current, email.current, password.current)
       if (success) {
         signIn('credentials', {
           email: email.current,
