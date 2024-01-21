@@ -1,21 +1,28 @@
 .tagListContainer {
   width: 100%;
   display: flex;
-  margin-left: 0.25rem;
+  padding-left: 0.25rem;
 }
 
 .tagList {
   width: 100%;
-  display: flex;
   flex-wrap: wrap;
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.tagList:hover {
+  overflow-x: auto;
 }
 
 .tagList .tag {
   padding: 0 0.25rem 0.25rem 0;
+  display: inline-block
 }
 
 .addContainer {
-  display: flex;
+  display: inline-block;
 }
 
 .addInput {
@@ -27,6 +34,11 @@
   background-color: transparent;
   padding: 0 0.5rem;
   margin-right: 0.25rem;
+  outline: none;
+}
+
+.addInput:focus {
+  border-color:aliceblue
 }
 
 .editButton {

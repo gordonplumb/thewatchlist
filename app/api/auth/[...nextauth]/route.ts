@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
           const res = await service.authenticate(credentials.email, credentials.password)
           if (res) {
             return {
-              id: res.userId,
+              id: res.id,
               name: res.name,
               accessToken: res.token
             }
@@ -34,14 +34,17 @@ export const authOptions: AuthOptions = {
   },
   session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (account && user) {
+    async jwt({ token, user, account, profile, session }) {
+      if (user) {
         token.accessToken = user.accessToken
       }
       return token
     },
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken
+      if (session?.user) {
+        session.accessToken = token.accessToken
+        session.user.id = token.sub
+      }
       return session
     }
   }

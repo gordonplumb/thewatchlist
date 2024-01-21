@@ -79,7 +79,6 @@ export default function Page() {
 
   function onTagsChange(newTags: string[]) {
     currentTags = newTags
-    console.log(currentTags)
   }
 
   return (

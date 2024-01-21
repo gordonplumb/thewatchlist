@@ -13,6 +13,11 @@
   @apply border text-center border-slate-300 text-slate-300 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none w-20;
 }
 
+.button.icon {
+  width: 2rem;
+  height: 2rem;
+}
+
 .button.primary {
   background-color: var(--primary-color);
 }
@@ -37,4 +42,18 @@
 
 .label-small {
   font-size: 0.8rem;
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.25rem;
+  background: #d6dee1
 }

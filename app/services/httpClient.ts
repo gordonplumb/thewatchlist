@@ -7,33 +7,32 @@ export class HttpClient {
     this.getToken = getToken
   }
 
-  public async sendGet(path: string) {
-    const headers = new Headers()
-    const token = await this.getToken()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
+  private async sendRequest(
+    method: string,
+    path: string,
+    headers: Headers | null,
+    body: object | null
+  ) {
+    if (!headers) {
+      headers = new Headers()
     }
-    return fetch(`${this.endpoint}/${path}`)
-  }
 
-  public async sendPost(path: string, body: object) {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
     const token = await this.getToken()
     if (token) {
       headers.append('Authorization', `Bearer ${token}`)
     }
+
     let result
     try {
       const response = await fetch(`${this.endpoint}/${path}`, {
-        method: 'POST',
+        method,
         headers,
-        body: JSON.stringify(body)
+        ...(body && { body: JSON.stringify(body) })
       })
       if (response.ok) {
         result = {
           ok: true,
-          body: await response.json()
+          body: response.status !== 204 ? await response.json() : null
         }
       } else {
         result = {
@@ -44,7 +43,35 @@ export class HttpClient {
     } catch (error) {
       console.log(error)
       // todo
+      result = { ok: false }
     }
     return result
+  }
+
+  public async sendGet(path: string, params: Record<string, string> | null = null) {
+    return this.sendRequest(
+      'GET',
+      params ? `${path}?${new URLSearchParams(params)}` : path,
+      null,
+      null
+    )
+  }
+
+  public async sendPost(path: string, body: object) {
+    const headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+    
+    return this.sendRequest('POST', path, headers, body)
+  }
+
+  public async sendPut(path: string, body: object) {
+    const headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+
+    return this.sendRequest('PUT', path, headers, body)
+  }
+
+  public async sendDelete(path: string) {
+    return this.sendRequest('DELETE', path, null, null)
   }
 }

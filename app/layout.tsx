@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { authOptions } from './api/auth/[...nextauth]/route'
 import Provider from './context/client-provider'
 import { SignInButton } from './components/SignInButton'
+import { WatchlistService } from './services/watchlistService'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,13 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const session = await getServerSession(authOptions)
+
+  let listId
+  if (session?.user) {
+    const service = WatchlistService.GetServerInstance()
+    const res = await service.getUserLists(session.user.id)
+    listId = res?.content[0]?.id
+  }
   return (
     <html lang="en">
       <body className={`${inter.className} bg-slate-800 text-slate-100 container mx-auto p-4 h-screen flex flex-col`}>
@@ -27,7 +35,7 @@ export default async function RootLayout({
             <h1 className="text-2xl">The Watchlist</h1>
             <div className="flex">
               {session?.user ? (
-                <Link className="button block mr-1" href="/list">
+                <Link className="button block mr-1" href={`/list/${listId}`}>
                   My List
                 </Link>  
               ) : ''}
