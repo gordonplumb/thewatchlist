@@ -1,12 +1,14 @@
 'use client'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import testSearchResults from '../data/searchResults.json'
-import { MovieDetails } from '../types/MovieDetails'
-import { SearchResultItem } from '../components/SearchResultItem'
-import { TagList } from '../components/TagList'
-import { MovieCredits } from '../types/MovieCredits'
-import { CreditItem } from '../components/CreditItem'
+import { MovieDetails } from '../../../types/MovieDetails'
+import { TagList } from '../../../components/TagList'
+import { MovieCredits } from '../../../types/MovieCredits'
+import { CreditItem } from '../../../components/CreditItem'
+import { useSession } from 'next-auth/react'
+import { redirectToLogin } from '../../../actions'
+import { useParams } from 'next/navigation'
+import { Search } from '@/app/components/Search'
 
 const testGenres = ['Genre1', 'Genre2', 'Genre3']
 const testMovieCredits = {
@@ -22,22 +24,20 @@ const testMovieCredits = {
 }
 
 export default function Page() {
-  const [searchInput, setSearchInput] = useState('')
-  const [searchResults, setSearchResults] = useState<MovieDetails[]>([])
+  const { data } = useSession()
+  if (!data?.user) {
+    redirectToLogin()
+  }
+  const { id: listId } = useParams<{id: string}>()
   const [selectedItem, setSelectedItem] = useState<MovieDetails>()
   const [movieCredits, setMovieCredits] = useState<MovieCredits>()
   const [tags, setTags] = useState<string[]>(testGenres)
 
   let currentTags = tags
 
-  function search() {
-    if (searchInput.length > 0) {
-      setSearchResults(testSearchResults)
-    }
-  }
-  function handleSearchResultClick(event: React.MouseEvent) {
+  function onSearchResultClick(movieDetails: MovieDetails) {
     // TODO: make api call to get movie details/credits
-    setSelectedItem(searchResults.find((item) => item.id === event.currentTarget.id))
+    setSelectedItem(movieDetails)
     setMovieCredits(testMovieCredits)
   }
 
@@ -88,44 +88,25 @@ export default function Page() {
           Add to list
         </h2>
         {!selectedItem ?
-          <div className="flex-auto flex-col">
-          <input
-            type="text"
-            className="border border-slate-300 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-100"
-            placeholder="Search movies..."
-            onInput={(e) => {
-              setSearchInput((e.target as HTMLInputElement).value)
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                search()
-              }
-            }}
-          />
-          <div id="searchResults">
-            {searchResults.map(searchResult => (
-              <SearchResultItem key={searchResult.id} {...searchResult} onClick={handleSearchResultClick}/>
-            ))}
-          </div>
-        </div> : 
-        <div>
-          <form>
-            <h3 className="text-lg">{selectedItem.title}</h3>
-            <p>{selectedItem.overview}</p>
-            <div>
-              <h4>Tags</h4>
-              <p className='secondaryText'>Add tags to help filter your list</p>
-              <TagList tags={tags} canEdit onTagsChange={onTagsChange}/>
-            </div>
-            <div>
-              <h4>Credits</h4>
+          <Search onSearchResultClick={onSearchResultClick}/> : 
+          <div>
+            <form>
+              <h3 className="text-lg">{selectedItem.title}</h3>
+              <p>{selectedItem.overview}</p>
               <div>
-                {renderMovieCredits()}
+                <h4>Tags</h4>
+                <p className='secondaryText'>Add tags to help filter your list</p>
+                <TagList tags={tags} canEdit onTagsChange={onTagsChange}/>
               </div>
-            </div>
-          </form>
-        </div>
-      }
+              <div>
+                <h4>Credits</h4>
+                <div>
+                  {renderMovieCredits()}
+                </div>
+              </div>
+            </form>
+          </div>
+        }
       </div>
       <div className="flex ml-auto">
         {selectedItem ? <>
@@ -136,7 +117,7 @@ export default function Page() {
             Back
           </button>
         </> : ''}
-        <Link className="button mr-2" href="/list">
+        <Link className="button mr-2" href={`/list/${listId}`}>
           Cancel
         </Link>
         <button className="button primary" disabled={!selectedItem}>

@@ -74,4 +74,14 @@ export class WatchlistService {
 
     return result.ok
   }
+
+  // search
+  public async search(query: string, pageNumber: number) {
+    const result = await this.client.sendGet('search', {
+      query,
+      pageNumber: pageNumber.toString() 
+    })
+
+    return result.body
+  }
 }

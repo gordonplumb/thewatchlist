@@ -34,6 +34,7 @@ export default function Page() {
           setListItems(res.content)
         }
       })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const updateListItem = (
@@ -57,7 +58,7 @@ export default function Page() {
         My List
       </h2>
       <div className="flex mb-2">
-        <Link className="button primary" href="/add">
+        <Link className="button primary" href={`/list/${listId}/add`}>
           Add
         </Link>
       </div>
