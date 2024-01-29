@@ -3,6 +3,7 @@ import { NodeClient } from './nodeClient'
 import { BrowserClient } from './browserClient'
 
 import config from '../conf'
+import { MovieDetails } from '../types/MovieDetails'
 
 export class WatchlistService {
   private client: HttpClient
@@ -56,6 +57,25 @@ export class WatchlistService {
     return result.body
   }
 
+  public async addListItem(
+    listId: string,
+    tmdbId: number,
+    title: string,
+    tags: string[],
+    runtime: number,
+    watched: boolean
+  ) {
+    const result = await this.client.sendPost(`list/${listId}/items`, {
+      tmdbId,
+      title,
+      tags,
+      runtime,
+      watched
+    })
+
+    return result.ok
+  }
+
   public async updateListItem(
     listId: string,
     listItemId: string,
@@ -81,6 +101,12 @@ export class WatchlistService {
       query,
       pageNumber: pageNumber.toString() 
     })
+
+    return result.body
+  }
+
+  public async getMovieDetails(id: number): Promise<MovieDetails> {
+    const result = await this.client.sendGet(`search/${id}`)
 
     return result.body
   }

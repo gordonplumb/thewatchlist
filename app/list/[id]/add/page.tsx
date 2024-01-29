@@ -1,44 +1,53 @@
 'use client'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { MovieDetails } from '../../../types/MovieDetails'
 import { TagList } from '../../../components/TagList'
-import { MovieCredits } from '../../../types/MovieCredits'
 import { CreditItem } from '../../../components/CreditItem'
 import { useSession } from 'next-auth/react'
-import { redirectToLogin } from '../../../actions'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { Search } from '@/app/components/Search'
-
-const testGenres = ['Genre1', 'Genre2', 'Genre3']
-const testMovieCredits = {
-  cast: [
-    { name: 'Cast Member1', character: 'Main Character' },
-    { name: 'Another Actor', character: 'The Antagonist' },
-    { name: 'Someone Else', character: 'Another Character' }
-  ],
-  crew: [
-    { name: 'Director Person', job: 'Director' },
-    { name: 'The Writer', job: 'Writer' }
-  ]
-}
+import { WatchlistService } from '@/app/services/watchlistService'
+import { MovieDetails } from '@/app/types/MovieDetails'
 
 export default function Page() {
   const { data } = useSession()
+  const router = useRouter()
   if (!data?.user) {
-    redirectToLogin()
+    router.push('/login')
   }
   const { id: listId } = useParams<{id: string}>()
   const [selectedItem, setSelectedItem] = useState<MovieDetails>()
-  const [movieCredits, setMovieCredits] = useState<MovieCredits>()
-  const [tags, setTags] = useState<string[]>(testGenres)
+  const [tags, setTags] = useState<string[]>([])
+  const service = WatchlistService.GetBrowserInstance()
 
   let currentTags = tags
 
-  function onSearchResultClick(movieDetails: MovieDetails) {
+  async function onSearchResultClick(id: number) {
     // TODO: make api call to get movie details/credits
-    setSelectedItem(movieDetails)
-    setMovieCredits(testMovieCredits)
+    const results = await service.getMovieDetails(id)
+    setSelectedItem(results)
+
+    if (results.genres.length > 0) {
+      setTags(results.genres.map(genre => genre.name))
+    }
+  }
+
+  async function addItem() {
+    if (!selectedItem) {
+      return
+    }
+    const result = await service.addListItem(
+      listId,
+      selectedItem.id,
+      selectedItem.title,
+      tags,
+      selectedItem.runtime,
+      false
+    )
+
+    if (result) {
+      router.push(`/list/${listId}`)
+    }
   }
 
   function onAddCreditAsTag(name: string) {
@@ -49,13 +58,23 @@ export default function Page() {
   }
 
   function renderMovieCredits() {
-    if (!movieCredits) {
+    const credits = selectedItem?.credits
+    if (!credits) {
       return null
     }
 
     return <div>
-      <div className="flex">
-        {movieCredits.cast.map(castMember => (
+      <div
+        id="cast-container"
+        className="flex overflow-x-scroll"
+        onWheel={(e) => {
+          const scrollable = document.getElementById('cast-container')
+          if (scrollable) {
+            scrollable.scrollLeft += e.deltaX + e.deltaY
+          }
+        }}
+      >
+        {credits.cast.map(castMember => (
           <CreditItem
             key={castMember.name}
             name={castMember.name}
@@ -64,8 +83,17 @@ export default function Page() {
           />
         ))}
       </div>
-      <div className="flex">
-        {movieCredits.crew.map(crewMember => (
+      <div
+        id="crew-container"
+        className="flex overflow-x-scroll"
+        onWheel={(e) => {
+          const scrollable = document.getElementById('crew-container')
+          if (scrollable) {
+            scrollable.scrollLeft += e.deltaX + e.deltaY
+          }
+        }}
+      >
+        {credits.crew.map(crewMember => (
           <CreditItem
             key={crewMember.name}
             name={crewMember.name}
@@ -90,21 +118,19 @@ export default function Page() {
         {!selectedItem ?
           <Search onSearchResultClick={onSearchResultClick}/> : 
           <div>
-            <form>
-              <h3 className="text-lg">{selectedItem.title}</h3>
-              <p>{selectedItem.overview}</p>
+            <h3 className="text-lg">{selectedItem.title}</h3>
+            <p className="secondaryText">{selectedItem.overview}</p>
+            <div>
+              <h4>Tags</h4>
+              <p className='secondaryText'>Add tags to help filter your list</p>
+              <TagList tags={tags} canEdit onTagsChange={onTagsChange}/>
+            </div>
+            <div>
+              <h4>Credits</h4>
               <div>
-                <h4>Tags</h4>
-                <p className='secondaryText'>Add tags to help filter your list</p>
-                <TagList tags={tags} canEdit onTagsChange={onTagsChange}/>
+                {renderMovieCredits()}
               </div>
-              <div>
-                <h4>Credits</h4>
-                <div>
-                  {renderMovieCredits()}
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
         }
       </div>
@@ -120,7 +146,11 @@ export default function Page() {
         <Link className="button mr-2" href={`/list/${listId}`}>
           Cancel
         </Link>
-        <button className="button primary" disabled={!selectedItem}>
+        <button
+          className="button primary"
+          disabled={!selectedItem}
+          onClick={addItem}
+        >
           Add
         </button>
       </div>

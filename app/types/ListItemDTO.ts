@@ -1,5 +1,5 @@
 export type ListItemDTO = {
-  id: string,
+  id: number,
   title: string,
   tags: string[],
   runtime: number,

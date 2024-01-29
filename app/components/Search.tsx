@@ -1,10 +1,10 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { SearchResultItem } from './SearchResultItem'
 import { WatchlistService } from '../services/watchlistService'
-import { MovieDetails } from '../types/MovieDetails'
+import { SearchItem } from '../types/SearchItem'
 
 type SearchProps = {
-  onSearchResultClick: (movieDetails: MovieDetails) => void
+  onSearchResultClick: (id: number) => void
 }
 
 export function Search({ onSearchResultClick }: SearchProps) {
@@ -13,7 +13,7 @@ export function Search({ onSearchResultClick }: SearchProps) {
   const currentPage = useRef(1)
   const totalPages = useRef(0)
   const isLoading = useRef(false)
-  const [searchResults, setSearchResults] = useState<MovieDetails[]>([])
+  const [searchResults, setSearchResults] = useState<SearchItem[]>([])
   const service = WatchlistService.GetBrowserInstance()
   const [size, setSize] = useState([0, 0])
 
@@ -56,9 +56,9 @@ export function Search({ onSearchResultClick }: SearchProps) {
   }
 
   function handleSearchResultClick(event: React.MouseEvent) {
-    const movieDetails = searchResults.find((item) => item.id.toString() === event.currentTarget.id)
-    if (movieDetails) {
-      onSearchResultClick(movieDetails)
+    const searchItem = searchResults.find((item) => item.id.toString() === event.currentTarget.id)
+    if (searchItem) {
+      onSearchResultClick(searchItem.id)
     }
   }
 
