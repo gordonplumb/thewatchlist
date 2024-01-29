@@ -32,7 +32,10 @@ export const authOptions: AuthOptions = {
     signIn: '/login',
     error: '/login'
   },
-  session: { strategy: 'jwt' },
+  session: {
+    strategy: 'jwt',
+    maxAge: 1 * 60 * 60 // 1 hour
+  },
   callbacks: {
     async jwt({ token, user, account, profile, session }) {
       if (user) {
