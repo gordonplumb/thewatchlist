@@ -15,7 +15,8 @@ export default function Page() {
   if (!data?.user) {
     router.push('/login')
   }
-  const { id: listId } = useParams<{id: string}>()
+  const { id } = useParams<{id: string}>()
+  const listId = Number.parseInt(id)
   const [selectedItem, setSelectedItem] = useState<MovieDetails>()
   const [tags, setTags] = useState<string[]>([])
   const service = WatchlistService.GetBrowserInstance()

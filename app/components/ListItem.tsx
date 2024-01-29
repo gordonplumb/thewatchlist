@@ -4,15 +4,16 @@ import styles from '../styles/List.module.css'
 
 
 type ListItemProps = {
-  id: string,
+  id: number,
   title: string,
   tags: Array<string>,
   runtime: number,
   watched: boolean,
-  onUpdate?: (id: string, updateValues: { tags: string[] | undefined, watched: boolean | undefined }) => void
-  onDelete?: (id: string) => void
+  onUpdate?: (id: number, updateValues: { tags: string[] | undefined, watched: boolean | undefined }) => void
+  onDelete?: (id: number) => void
 }
 export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete }: ListItemProps) {
+  const idString = id.toString()
   const onTagsChange = (tags: string[]) => {
     if (onUpdate) {
       onUpdate(id, { tags, watched: undefined })
@@ -20,7 +21,7 @@ export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete
   }
   return <li>
     <div className="flex h-14 border-b border-slate-700 p-2">
-      <label htmlFor={id} className={styles.title}>{title}</label>
+      <label htmlFor={idString} className={styles.title}>{title}</label>
       <div className={`${styles.tags} flex p-1`}>
         <TagList
           listItemId={id}
@@ -32,7 +33,7 @@ export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete
       <p className={styles.runtime}>{runtime}</p>
       <div className={styles.watched}>
         <input
-          id={id}
+          id={idString}
           type="checkbox"
           className="cursor-pointer"
           disabled={!onUpdate}

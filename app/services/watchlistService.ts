@@ -37,18 +37,18 @@ export class WatchlistService {
   }
 
   // List Management
-  public async getList(listId: string) {
+  public async getList(listId: number) {
     const result = await this.client.sendGet(`list/${listId}`)
 
     return result.body
   }
-  public async getUserLists(userId: string) {
+  public async getUserLists(userId: number) {
     const result = await this.client.sendGet(`list/user/${userId}`)
 
     return result.body
   }
 
-  public async getListItems(listId: string, pageNumber: number, pageSize: number) {
+  public async getListItems(listId: number, pageNumber: number, pageSize: number) {
     const result = await this.client.sendGet(`list/${listId}/items`, {
       pageNumber: pageNumber.toString(),
       pageSize: pageSize.toString()
@@ -58,7 +58,7 @@ export class WatchlistService {
   }
 
   public async addListItem(
-    listId: string,
+    listId: number,
     tmdbId: number,
     title: string,
     tags: string[],
@@ -77,8 +77,8 @@ export class WatchlistService {
   }
 
   public async updateListItem(
-    listId: string,
-    listItemId: string,
+    listId: number,
+    listItemId: number,
     updateValues: { tags: string[] | undefined, watched: boolean | undefined }
   ) {
     const result = await this.client.sendPut(
@@ -89,7 +89,7 @@ export class WatchlistService {
     return result.ok
   }
 
-  public async deleteListItem(listId: string, listItemId: string) {
+  public async deleteListItem(listId: number, listItemId: number) {
     const result = await this.client.sendDelete(`list/${listId}/items/${listItemId}`)
 
     return result.ok

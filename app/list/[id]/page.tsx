@@ -11,7 +11,8 @@ import { useSession } from 'next-auth/react'
 
 const pageSize = 100
 export default function Page() {
-  const { id: listId } = useParams<{id: string}>()
+  const { id } = useParams<{id: string}>()
+  const listId = Number.parseInt(id)
   const service = WatchlistService.GetBrowserInstance()
   const [canEdit, setCanEdit] = useState<boolean>(false)
   const [listItems, setListItems] = useState<ListItemDTO[]>([])
@@ -38,13 +39,13 @@ export default function Page() {
   }, [])
 
   const updateListItem = (
-    listItemId: string,
+    listItemId: number,
     updateValues: { tags: string[] | undefined, watched: boolean | undefined }
   ) => {
     service.updateListItem(listId, listItemId, updateValues)
   }
 
-  const deleteListItem = async (listItemId: string) => {
+  const deleteListItem = async (listItemId: number) => {
     const result = await service.deleteListItem(listId, listItemId)
 
     if (result) {

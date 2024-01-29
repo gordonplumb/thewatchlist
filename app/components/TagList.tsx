@@ -4,7 +4,7 @@ import { Tag } from './Tag'
 import { AddIcon } from './AddIcon'
 
 type TagListProps = {
-  listItemId?: string,
+  listItemId?: number,
   tags: string[],
   canEdit: boolean,
   onTagsChange?: (tags: string[]) => void
