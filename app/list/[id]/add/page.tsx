@@ -37,13 +37,14 @@ export default function Page() {
     if (!selectedItem) {
       return
     }
+    const checkboxItem = document.getElementById('watched-checkbox') as HTMLInputElement
     const result = await service.addListItem(
       listId,
       selectedItem.id,
       selectedItem.title,
       tags,
       selectedItem.runtime,
-      false
+      checkboxItem?.checked
     )
 
     if (result) {
@@ -67,7 +68,7 @@ export default function Page() {
     return <div>
       <div
         id="cast-container"
-        className="flex overflow-x-scroll"
+        className="flex overflow-x-scroll mb-2"
         onWheel={(e) => {
           const scrollable = document.getElementById('cast-container')
           if (scrollable) {
@@ -119,18 +120,28 @@ export default function Page() {
         {!selectedItem ?
           <Search onSearchResultClick={onSearchResultClick}/> : 
           <div>
-            <h3 className="text-lg">{selectedItem.title}</h3>
-            <p className="secondaryText">{selectedItem.overview}</p>
-            <div>
+            <div className="pb-4">
+              <h3 className="text-lg">{selectedItem.title}</h3>
+              <p className="secondaryText">{selectedItem.overview}</p>
+            </div>
+            <div className="pb-4">
               <h4>Tags</h4>
               <p className='secondaryText'>Add tags to help filter your list</p>
               <TagList tags={tags} canEdit onTagsChange={onTagsChange}/>
             </div>
-            <div>
+            <div className="pb-4">
               <h4>Credits</h4>
               <div>
                 {renderMovieCredits()}
               </div>
+            </div>
+            <div>
+              <input
+                id="watched-checkbox"
+                type="checkbox"
+                className="cursor-pointer"
+              />
+              <label className="pl-1">Watched</label>
             </div>
           </div>
         }
