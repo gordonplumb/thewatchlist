@@ -1,3 +1,7 @@
+.itemContainer {
+  min-height: 4rem;
+}
+
 .title {
   width: 33.33%;
   padding-left: 0.5rem;

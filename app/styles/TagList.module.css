@@ -10,6 +10,7 @@
   white-space: nowrap;
   overflow-x: hidden;
   overflow-y: hidden;
+  overscroll-behavior: contain;
 }
 
 .tagList:hover {
@@ -17,8 +18,8 @@
 }
 
 .tagList .tag {
-  padding: 0 0.25rem 0.25rem 0;
-  display: inline-block
+  padding-right: 0.25rem;
+  display: inline-block;
 }
 
 .addContainer {
