@@ -14,12 +14,13 @@ type ListItemProps = {
 }
 export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete }: ListItemProps) {
   const idString = id.toString()
+  const runtimeString = `${Math.floor(runtime / 60)}:${(runtime % 60).toString().padStart(2, '0')}`
   const onTagsChange = (tags: string[]) => {
     if (onUpdate) {
       onUpdate(id, { tags, watched: undefined })
     }
   }
-  return <li>
+  return (
     <div className="flex h-14 border-b border-slate-700 p-2">
       <label htmlFor={idString} className={styles.title}>{title}</label>
       <div className={`${styles.tags} flex p-1`}>
@@ -30,7 +31,7 @@ export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete
           onTagsChange={onTagsChange}
         />
       </div>
-      <p className={styles.runtime}>{runtime}</p>
+      <p className={styles.runtime}>{runtimeString}</p>
       <div className={styles.watched}>
         <input
           id={idString}
@@ -59,5 +60,5 @@ export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete
         ) : ''}
       </div>
     </div>
-  </li>
+  )
 }

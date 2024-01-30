@@ -1,19 +1,29 @@
 .title {
-  width: 33.33%
+  width: 33.33%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .tags {
-  width: 33.33%
+  width: 33.33%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .runtime {
-  width: 16.67%
+  width: 16.67%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .watched {
-  width: 8.33%
+  width: 8.33%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .remove {
-  width: 8.33%
+  width: 8.33%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
