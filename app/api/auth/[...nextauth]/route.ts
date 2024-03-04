@@ -1,53 +1,55 @@
 import NextAuth from 'next-auth/next'
 import type { AuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { WatchlistService } from '../../../services/watchlistService'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: AuthOptions = {
   providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' }
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      httpOptions: {
+        timeout: 40000
       },
-      async authorize(credentials, req) {
-        if (credentials) {
-          const service = WatchlistService.GetServerInstance()
-          const res = await service.authenticate(credentials.email, credentials.password)
-          if (res) {
-            return {
-              id: res.id,
-              name: res.name,
-              accessToken: res.token
-            }
-          }
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code'
         }
-
-        return null
       }
     })
   ],
-  pages: {
-    signIn: '/login',
-    error: '/login'
-  },
-  session: {
-    strategy: 'jwt',
-    maxAge: 1 * 60 * 60 // 1 hour
-  },
   callbacks: {
-    async jwt({ token, user, account, profile, session }) {
-      if (user) {
-        token.accessToken = user.accessToken
+    async jwt({ token, account, user }) {
+      if (account) {
+        const res = await fetch(
+          `${process.env.PUBLIC_BACKEND_URL}/api/auth/authenticate`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${account.id_token}`
+            }
+          }
+        )
+        console.log('jwt')
+        const resJson = await res.json()
+        console.log(resJson)
+        token = Object.assign({}, token, {
+          id_token: account.id_token,
+          accessToken: resJson.token
+        })
+        console.log(token)
       }
+
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (session?.user) {
         session.accessToken = token.accessToken
         session.user.id = token.sub
+        console.log(session)
       }
+
       return session
     }
   }

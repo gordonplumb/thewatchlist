@@ -37,7 +37,7 @@ export default function Page() {
       service.getList(listId)
       .then(res => {
         if (res) {
-          setCanEdit(res.userId === Number.parseInt(data.user.id))
+          setCanEdit(res.userId === data.user.id)
         }
       })
     }

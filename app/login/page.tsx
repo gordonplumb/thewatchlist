@@ -20,6 +20,13 @@ export default function LoginPage() {
     } 
   }
 
+  const signInGoogle = () => {
+    signIn('google', {
+      redirect: true,
+      callbackUrl: '/'
+    })
+  }
+
   const validateInput = () => {
     setIsDisabled(!(email.current && password.current))
   }
@@ -57,6 +64,12 @@ export default function LoginPage() {
         onClick={onSubmit}
       >
         Sign In
+      </button>
+      <button
+        className="button primary button-max mb-4"
+        onClick={signInGoogle}
+      >
+        Sign In With Google
       </button>
       <hr className="bg-slate-500 text-slate-500 border-0 rounded h-0.5 w-11/12 self-center mb-4"/>
       <Link className="button primary button-max" href="register">
