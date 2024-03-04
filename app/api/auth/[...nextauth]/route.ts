@@ -31,14 +31,11 @@ export const authOptions: AuthOptions = {
             }
           }
         )
-        console.log('jwt')
         const resJson = await res.json()
-        console.log(resJson)
         token = Object.assign({}, token, {
           id_token: account.id_token,
           accessToken: resJson.token
         })
-        console.log(token)
       }
 
       return token
@@ -47,7 +44,6 @@ export const authOptions: AuthOptions = {
       if (session?.user) {
         session.accessToken = token.accessToken
         session.user.id = token.sub
-        console.log(session)
       }
 
       return session

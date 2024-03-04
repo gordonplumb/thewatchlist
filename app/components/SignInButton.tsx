@@ -1,7 +1,14 @@
 'use client'
 
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+
+const signInGoogle = () => {
+  signIn('google', {
+    redirect: true,
+    callbackUrl: '/'
+  })
+}
 
 export function SignInButton() {
   const { data } = useSession()
@@ -12,8 +19,8 @@ export function SignInButton() {
     </button>
   ) :
   (
-    <Link className="button" href="/login">
-      Sign In
-    </Link>
+    <button className="button button-max" onClick={signInGoogle}>
+      Sign In With Google
+    </button>
   )
 }

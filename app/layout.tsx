@@ -32,7 +32,9 @@ export default async function RootLayout({
       <body className={`${inter.className} bg-slate-800 text-slate-100 container mx-auto p-4 h-screen flex flex-col`}>
         <Provider session={session}>
           <header className="flex justify-between items-center mb-4 flex-initial">
-            <h1 className="text-2xl">The Watchlist</h1>
+            <Link href={'/'}>
+              <h1 className="text-2xl">The Watchlist</h1>
+            </Link>
             <div className="flex">
               {session?.user ? (
                 <Link className="button block mr-1" href={`/list/${listId}`}>
