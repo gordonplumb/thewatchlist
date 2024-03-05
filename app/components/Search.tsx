@@ -34,9 +34,12 @@ export function Search({ onSearchResultClick }: SearchProps) {
       currentSearch.current = searchQuery
       currentPage.current = 1
       const page = await service.search(searchQuery, currentPage.current)
-      totalPages.current = page.totalPages
-      setSearchResults(page.results)
+      if (page) {
+        totalPages.current = page.totalPages
+        setSearchResults(page.results)
+      }
       isLoading.current = false
+      console.log(isLoading.current)
     }
   }
 
