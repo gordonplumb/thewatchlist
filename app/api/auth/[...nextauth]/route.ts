@@ -34,7 +34,8 @@ export const authOptions: AuthOptions = {
         const resJson = await res.json()
         token = Object.assign({}, token, {
           id_token: account.id_token,
-          accessToken: resJson.token
+          accessToken: resJson.token,
+          id: resJson.id
         })
       }
 
@@ -43,7 +44,8 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       if (session?.user) {
         session.accessToken = token.accessToken
-        session.user.id = token.sub
+        session.user.gId = token.sub
+        session.user.id = token.id
       }
 
       return session
