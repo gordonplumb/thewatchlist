@@ -9,6 +9,10 @@
   --secondary-text-color: rgba(255, 255, 255, 0.6);
 }
 
+html, body {
+  height: 100%;
+}
+
 .button {
   @apply border text-center border-slate-300 text-slate-300 py-1 px-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none;
   min-width: 5rem;

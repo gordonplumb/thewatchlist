@@ -39,6 +39,11 @@ export default async function RootLayout({
             </div>
           </header>
           {children}
+          <footer className='mt-auto text-center'>
+            <div>
+              <a href='/about'>About</a>
+            </div>
+          </footer>
         </Provider>
       </body>
     </html>
