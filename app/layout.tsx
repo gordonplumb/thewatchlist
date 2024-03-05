@@ -21,12 +21,6 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions)
 
-  let listId
-  if (session?.user) {
-    const service = WatchlistService.GetServerInstance()
-    const res = await service.getUserLists(session.user.id)
-    listId = res?.content[0]?.id
-  }
   return (
     <html lang="en">
       <body className={`${inter.className} bg-slate-800 text-slate-100 container mx-auto p-4 h-screen flex flex-col`}>
@@ -37,8 +31,8 @@ export default async function RootLayout({
             </Link>
             <div className="flex">
               {session?.user ? (
-                <Link className="button block mr-1" href={`/list/${listId}`}>
-                  My List
+                <Link className="button block mr-1" href={`/lists/${session.user.id}`}>
+                  My Lists
                 </Link>  
               ) : ''}
               <SignInButton />

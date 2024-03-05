@@ -1,4 +1,4 @@
-export type ListItemDTO = {
+export type ListItem = {
   id: number,
   title: string,
   tags: string[],

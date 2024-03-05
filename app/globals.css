@@ -10,10 +10,12 @@
 }
 
 .button {
-  @apply border text-center border-slate-300 text-slate-300 py-1 px-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none w-20;
+  @apply border text-center border-slate-300 text-slate-300 py-1 px-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none;
+  min-width: 5rem;
 }
 
 .button.icon {
+  min-width: 0;
   width: 2rem;
   height: 2rem;
 }

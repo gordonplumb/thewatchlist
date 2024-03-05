@@ -21,7 +21,7 @@ export function ListItem({ id, title, tags, runtime, watched, onUpdate, onDelete
     }
   }
   return (
-    <div className={`${styles.itemContainer} flex border-b border-slate-700 p-2`}>
+    <div className={`${styles.item} ${styles.container}`}>
       <label htmlFor={idString} className={styles.title}>{title}</label>
       <div className={`${styles.tags} flex p-1`}>
         <TagList

@@ -1,4 +1,12 @@
-.itemContainer {
+.container {
+  display: flex;
+  border-bottom-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(51 65 85 / var(--tw-border-opacity));
+  padding: 0.5rem;
+}
+
+.item {
   min-height: 4rem;
 }
 

@@ -5,7 +5,7 @@ import { ListItem } from '../../components/ListItem'
 import { WatchlistService } from '../../services/watchlistService'
 import { useParams } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { ListItemDTO } from '../../../app/types/ListItemDTO'
+import { ListItem as ListItemType } from '../../types/ListItem'
 import styles from '../../styles/List.module.css'
 import { useSession } from 'next-auth/react'
 
@@ -15,7 +15,7 @@ export default function Page() {
   const listId = Number.parseInt(id)
   const service = WatchlistService.GetBrowserInstance()
   const [canEdit, setCanEdit] = useState<boolean>(false)
-  const [listItems, setListItems] = useState<ListItemDTO[]>([])
+  const [listItems, setListItems] = useState<ListItemType[]>([])
   const [size, setSize] = useState([0, 0])
   const nextPage = useRef(0)
   const totalPages = useRef(0)
@@ -35,11 +35,11 @@ export default function Page() {
   useEffect(() => {
     if (data?.user?.id) {
       service.getList(listId)
-      .then(res => {
-        if (res) {
-          setCanEdit(res.userId === data.user.id)
-        }
-      })
+        .then(res => {
+          if (res) {
+            setCanEdit(res.userId === data.user.id)
+          }
+        })
     }
     
     isLoading.current = true
@@ -95,7 +95,7 @@ export default function Page() {
           Add
         </Link>
       </div>
-      <div className="flex border-b border-slate-700 p-2">
+      <div className={styles.container}>
         <p className={styles.title}>Title</p>
         <p className={styles.tags}>Tags</p>
         <p className={styles.runtime}>Runtime</p>

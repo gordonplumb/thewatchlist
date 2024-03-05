@@ -37,12 +37,19 @@ export class WatchlistService {
   }
 
   // List Management
+  public async createList() {
+    const result = await this.client.sendPost('list', { name: 'My list' });
+
+    return result.body;
+  }
+  
   public async getList(listId: number) {
     const result = await this.client.sendGet(`list/${listId}`)
 
     return result.body
   }
-  public async getUserLists(userId: number) {
+
+  public async getUserLists(userId: string) {
     const result = await this.client.sendGet(`list/user/${userId}`)
 
     return result.body
