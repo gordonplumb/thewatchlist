@@ -15,6 +15,8 @@ export default function Page() {
   const isLoading = useRef(true)
   const router = useRouter()
   const { data } = useSession()
+  const userId = data?.user?.id;
+  const canEdit = userId === Number.parseInt(id)
 
   useEffect(() => {
     service.getUserLists(id)
@@ -40,7 +42,7 @@ export default function Page() {
       <h2 className="text-xl mb-2">
         {name ? `${name}'s lists` : ''}
       </h2>
-      {!isLoading.current && lists?.length < 1 ? (
+      {canEdit && !isLoading.current && lists?.length < 1 ? (
         <div className="mb-2">
           <button
             className="button primary"
