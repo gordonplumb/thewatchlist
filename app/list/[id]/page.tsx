@@ -16,6 +16,8 @@ export default function Page() {
   const service = WatchlistService.GetBrowserInstance()
   const [canEdit, setCanEdit] = useState<boolean>(false)
   const [listItems, setListItems] = useState<ListItemType[]>([])
+  // TODO: actually get and use the list's name
+  const [listName, setListName] = useState('')
   const [size, setSize] = useState([0, 0])
   const nextPage = useRef(0)
   const totalPages = useRef(0)
@@ -88,7 +90,7 @@ export default function Page() {
   return (
     <div>
       <h2 className="text-xl mb-2">
-        My List
+        {listName}
       </h2>
       <div className="flex mb-2">
         <Link className="button primary" href={`/list/${listId}/add`}>

@@ -37,12 +37,12 @@ export class WatchlistService {
   }
 
   // List Management
-  public async createList() {
-    const result = await this.client.sendPost('list', { name: 'My list' });
+  public async createList(name: string) {
+    const result = await this.client.sendPost('list', { name });
 
     return result.body;
   }
-  
+
   public async getList(listId: number) {
     const result = await this.client.sendGet(`list/${listId}`)
 
